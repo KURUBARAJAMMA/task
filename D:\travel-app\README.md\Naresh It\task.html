@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .header, .sub-header {
+            background-color: #3574fd;
+            padding: 8px;
+            text-align: right;
+            font-weight: bold;
+        }
+        .header a, .sub-header a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: black;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+        }
+        .form-group input, 
+        .form-group select, 
+        .form-group button,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+        }
+        .form-group input[type="file"] {
+            border: none;
+        }
+        .table-container {
+            max-width: 1000px;
+            margin: 20px auto;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            text-align: center;
+            padding: 10px;
+        }
+        table th {
+            background-color: #fdd835;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div class="container">
+        <h2>Login Page</h2>
+        <form>
+            <div class="form-group">
+                <label for="username">User Name</label>
+                <input type="text" id="username" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter password">
+            </div>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="header">
+        <span>Welcome Admin Panel</span>
+        <a href="#">Home</a>
+        <a href="#">Employee List</a>
+        <a href="#">Logout</a>
+    </div>
+    <div class="container">
+        <h2>Dashboard</h2>
+        <p>Welcome to the Admin Panel!</p>
+    </div>
+
+    <!-- Create Employee -->
+    <div class="container">
+        <h2>Create Employee</h2>
+        <form>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Enter name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label for="mobile">Mobile No</label>
+                <input type="tel" id="mobile" placeholder="Enter mobile number">
+            </div>
+            <div class="form-group">
+                <label for="designation">Designation</label>
+                <select id="designation">
+                    <option value="HR">HR</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Sales">Sales</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Gender</label>
+                <label><input type="radio" name="gender" value="M"> Male</label>
+                <label><input type="radio" name="gender" value="F"> Female</label>
+            </div>
+            <div class="form-group">
+                <label>Course</label>
+                <label><input type="checkbox" value="MCA"> MCA</label>
+                <label><input type="checkbox" value="BCA"> BCA</label>
+                <label><input type="checkbox" value="BSC"> BSC</label>
+            </div>
+            <div class="form-group">
+                <label for="fileUpload">Image Upload</label>
+                <input type="file" id="fileUpload">
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <!-- Employee List -->
+    <div class="container table-container">
+        <h2>Employee List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Unique ID</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Mobile No</th>
+                    <th>Designation</th>
+                    <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="employee-list">
+      <!-- Employee rows will be inserted here -->
+    </tbody>
+  </table>
+  <script>
+    const employees = [
+      { name: "Hukum", email: "hukum@example.com", mobile: "954100044", designation: "HR" },
+      { name: "Manish", email: "manish@example.com", mobile: "954100033", designation: "Sales" }
+    ];
+
+    function renderEmployees() {
+      const list = document.getElementById("employee-list");
+      list.innerHTML = "";
+      employees.forEach((emp, index) => {
+        list.innerHTML += `
+          <tr>
+            <td>${emp.name}</td>
+            <td>${emp.email}</td>
+            <td>${emp.mobile}</td>
+            <td>${emp.designation}</td>
+            <td>
+              <button onclick="editEmployee(${index})">Edit</button>
+              <button onclick="deleteEmployee(${index})">Delete</button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    function editEmployee(index) {
+      alert("Edit Employee: " + employees[index].name);
+      window.location.href = `edit-employee.html?index=${index}`;
+    }
+
+    function deleteEmployee(index) {
+      employees.splice(index, 1);
+      renderEmployees();
+    }
+
+    renderEmployees();
+  </script>
+
+  <!-- Create Employee -->
+  <div class="container">
+    <h2>Create Employee</h2>
+    <form>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Enter name">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+            <label for="mobile">Mobile No</label>
+            <input type="tel" id="mobile" placeholder="Enter mobile number">
+        </div>
+        <div class="form-group">
+            <label for="designation">Designation</label>
+            <select id="designation">
+                <option value="HR">HR</option>
+                <option value="Manager">Manager</option>
+                <option value="Sales">Sales</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Gender</label>
+            <label><input type="radio" name="gender" value="M"> Male</label>
+            <label><input type="radio" name="gender" value="F"> Female</label>
+        </div>
+        <div class="form-group">
+            <label>Course</label>
+            <label><input type="checkbox" value="MCA"> MCA</label>
+            <label><input type="checkbox" value="BCA"> BCA</label>
+            <label><input type="checkbox" value="BSC"> BSC</label>
+        </div>
+        <div class="form-group">
+            <label for="fileUpload">Image Upload</label>
+            <input type="file" id="fileUpload">
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+</body>
+</html>
