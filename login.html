@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard with Employee Management</title>
+    <style>
+        /* Add your combined styles from both the login and dashboard pages here */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        /* Your previous CSS styles */
+    </style>
+</head>
+<body>
+
+<!-- Login Page (Initial page to show first) -->
+<div id="loginPage" style="display: block;">
+    <div class="login-container">
+        <h2>Login Page</h2>
+        <form id="login-form" action="#" method="post">
+            <div class="form-group">
+                <label for="username">User Name</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="login-button">Login</button>
+        </form>
+    </div>
+</div>
+
+<!-- Admin Dashboard -->
+<div id="dashboardPage" style="display: none;">
+    <div class="navbar">
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Employee List</a>
+        </div>
+        <div class="user-info">
+            Hukum Gupta - <a href="#" style="text-decoration: none; color: red;" onclick="logout()">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="menu-item" onclick="navigateTo('dashboard')">Dashboard</div>
+            <div class="menu-item" onclick="navigateTo('addEmployee')">Add Employee</div>
+            <div class="menu-item" onclick="navigateTo('manageEmployee')">Manage Employees</div>
+            <div class="menu-item" onclick="navigateTo('settings')">Settings</div>
+        </div>
+
+        <div class="main-content">
+            <div class="welcome">Welcome Admin Panel</div>
+            <div class="actions">
+                <h3>Actions</h3>
+                <button onclick="performAction('add')">Add Employee</button>
+                <button onclick="performAction('edit')">Edit Employee</button>
+                <button class="delete-btn" onclick="performAction('delete')">Delete Employee</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript Code -->
+<script>
+    // Login handling
+    document.getElementById('login-form').addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent default form submission
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        if (username && password) {
+            document.getElementById('loginPage').style.display = 'none';  // Hide login page
+            document.getElementById('dashboardPage').style.display = 'block';  // Show dashboard
+        } else {
+            alert('Please enter your username and password!');
+        }
+    });
+
+    // Admin dashboard functions
+    function navigateTo(section) {
+        alert(`Navigating to ${section} section.`);
+    }
+
+    function performAction(action) {
+        switch (action) {
+            case 'add':
+                alert('Add Employee action performed.');
+                break;
+            case 'edit':
+                alert('Edit Employee action performed.');
+                break;
+            case 'delete':
+                alert('Delete Employee action performed.');
+                break;
+            default:
+                alert('Unknown action.');
+        }
+    }
+
+    // Logout function
+    function logout() {
+        document.getElementById('loginPage').style.display = 'block';  // Show login page
+        document.getElementById('dashboardPage').style.display = 'none';  // Hide dashboard
+    }
+</script>
+</body>
+</html>

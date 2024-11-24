@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #e6f0ff;
+            padding: 10px 20px;
+            border-bottom: 2px solid black;
+        }
+
+        .navbar .nav-links a,
+        .navbar .user-info {
+            font-weight: bold;
+            text-decoration: none;
+            color: black;
+            margin: 0 10px;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #ffff99;
+            padding: 10px;
+            height: 100vh;
+            box-sizing: border-box;
+            border-right: 2px solid black;
+        }
+
+        .sidebar .menu-item {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .main-content {
+            padding: 20px;
+            flex: 1;
+        }
+
+        form {
+            border: 2px solid black;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="file"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group-inline {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .form-group-inline input[type="radio"],
+        .form-group-inline input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .submit-button {
+            background-color: lightgreen;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .submit-button:hover {
+            background-color: green;
+        }
+
+        .validation-message {
+            color: red;
+            font-size: 14px;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        .edit-delete {
+            cursor: pointer;
+            color: blue;
+        }
+
+        .edit-delete:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Employee List</a>
+        </div>
+        <div class="user-info">
+            Hukum Gupta - <a href="#" onclick="logout()">Logout</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="sidebar">
+            <div class="menu-item">Create Employee</div>
+        </div>
+        <div class="main-content">
+            <form id="employeeForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter email" required>
+                    <span class="validation-message" id="emailValidation"></span>
+                </div>
+                <div class="form-group">
+                    <label for="mobile">Mobile No</label>
+                    <input type="text" id="mobile" name="mobile" placeholder="Enter mobile number" required>
+                    <span class="validation-message" id="mobileValidation"></span>
+                </div>
+                <div class="form-group">
+                    <label for="designation">Designation</label>
+                    <select id="designation" name="designation" required>
+                        <option value="">Select</option>
+                        <option value="HR">HR</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Sales">Sales</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Gender</label>
+                    <div class="form-group-inline">
+                        <input type="radio" id="male" name="gender" value="Male" required>
+                        <label for="male">Male</label>
+                        <input type="radio" id="female" name="gender" value="Female" required>
+                        <label for="female">Female</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Course</label>
+                    <div class="form-group-inline">
+                        <input type="checkbox" id="mca" name="course" value="MCA">
+                        <label for="mca">MCA</label>
+                        <input type="checkbox" id="bca" name="course" value="BCA">
+                        <label for="bca">BCA</label>
+                        <input type="checkbox" id="bsc" name="course" value="BSC">
+                        <label for="bsc">BSC</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="image">Image Upload</label>
+                    <input type="file" id="image" name="image" accept=".jpg, .png" required>
+                </div>
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+
+            <!-- Employee List Table -->
+            <table id="employeeTable">
+                <thead>
+                    <tr>
+                        <th>Unique ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Mobile No</th>
+                        <th>Designation</th>
+                        <th>Gender</th>
+                        <th>Course</th>
+                        <th>Image</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Employee entries will be added here dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const employeeForm = document.getElementById('employeeForm');
+        const employeeTable = document.getElementById('employeeTable').getElementsByTagName('tbody')[0];
+
+        // Employee Data Array
+        const employees = [];
+
+        // Form submission handler
+        employeeForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const mobile = document.getElementById('mobile').value;
+            const designation = document.getElementById('designation').value;
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            const course = [];
+            document.querySelectorAll('input[name="course"]:checked').forEach((checkbox) => {
+                course.push(checkbox.value);
+            });
+            const image = document.getElementById('image').files[0] ? document.getElementById('image').files[0].name : 'No image';
+
+            // Validate inputs (basic)
+            if (!name || !email || !mobile || !designation || !gender || !course.length) {
+                alert("All fields are required!");
+                return;
+            }
+
+            // Add employee to array
+            const employee = {
+                id: employees.length + 1,
+                name,
+                email,
+                mobile,
+                designation,
+                gender,
+                course: course.join(', '),
+                image
+            };
+            employees.push(employee);
+
+            // Clear the form
+            employeeForm.reset();
+
+            // Update employee table
+            updateEmployeeTable();
+        });
+
+        // Update Employee Table
+        function updateEmployeeTable() {
+            employeeTable.innerHTML = '';
+            employees.forEach(employee => {
+                const row = employeeTable.insertRow();
+                row.insertCell(0).textContent = employee.id;
+                row.insertCell(1).textContent = employee.name;
+                row.insertCell(2).textContent = employee.email;
+                row.insertCell(3).textContent = employee.mobile;
+                row.insertCell(4).textContent = employee.designation;
+                row.insertCell(5).textContent = employee.gender;
+                row.insertCell(6).textContent = employee.course;
+                row.insertCell(7).textContent = employee.image;
+                row.insertCell(8).innerHTML = `<span class="edit-delete" onclick="editEmployee(${employee.id})">Edit</span> | <span class="edit-delete" onclick="deleteEmployee(${employee.id})">Delete</span>`;
+            });
+        }
+
+        // Edit employee
+        function editEmployee(id) {
+            const employee = employees.find(emp => emp.id === id);
+            if (employee) {
+                document.getElementById('name').value = employee.name;
+                document.getElementById('email').value = employee.email;
+                document.getElementById('mobile').value = employee.mobile;
+                document.getElementById('designation').value = employee.designation;
+                document.querySelector(`input[name="gender"][value="${employee.gender}"]`).checked = true;
+                employee.course.split(', ').forEach(course => {
+                    document.querySelector(`input[name="course"][value="${course}"]`).checked = true;
+                });
+                // Mark employee as editing
+                employeeForm.setAttribute('data-editing', id);
+            }
+        }
+
+        // Delete employee
+        function deleteEmployee(id) {
+            const index = employees.findIndex(emp => emp.id === id);
+            if (index !== -1) {
+                employees.splice(index, 1); // Remove employee from array
+                updateEmployeeTable(); // Update the table
+            }
+        }
+
+        // Logout function
+        function logout() {
+            alert("You have been logged out!");
+            window.location.reload(); // Redirect or reset as needed
+        }
+    </script>
+</body>
+</html>
